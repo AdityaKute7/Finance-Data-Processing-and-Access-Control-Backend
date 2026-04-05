@@ -1,4 +1,4 @@
-package com.Aditya.ZorvynAsssignment.config;
+package com.Aditya.ZorvynAsssignment.Config;
 
 import com.Aditya.ZorvynAsssignment.security.JwtAuthenticationEntryPoint;
 import com.Aditya.ZorvynAsssignment.security.JwtAuthenticationFilter;
