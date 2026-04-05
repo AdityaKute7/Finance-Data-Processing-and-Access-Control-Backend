@@ -90,5 +90,3 @@ The application will start on `http://localhost:8080`.
 ### Dashboard API (`/api/dashboard`)
 - `GET /summary`: Retrieve financial summary and analytics (Allowed for `ANALYST`, `ADMIN`).
 
-## License
-[Determine License e.g. MIT]
