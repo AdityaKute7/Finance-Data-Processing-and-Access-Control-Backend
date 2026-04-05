@@ -1,0 +1,365 @@
+{
+	"info": {
+		"name": "Finance Data Processing API",
+		"description": "API documentation for Zorvyn Assignment - Finance Data Processing and Access Control Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if(jsonData.token) {",
+									"    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"viewer_user\",\n    \"email\": \"viewer@example.com\",\n    \"password\": \"viewerpass\",\n    \"role\": \"VIEWER\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Finance Records",
+			"item": [
+				{
+					"name": "Get All Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/records",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Record",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 1500.50,\n    \"type\": \"INCOME\",\n    \"category\": \"Salary\",\n    \"date\": \"2023-10-01\",\n    \"description\": \"October Salary\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/records",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Record",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 1600.00,\n    \"type\": \"INCOME\",\n    \"category\": \"Salary\",\n    \"date\": \"2023-10-01\",\n    \"description\": \"Updated October Salary\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/records/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Record",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/records/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter By Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/records/filter/date?startDate=2023-10-01&endDate=2023-10-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records",
+								"filter",
+								"date"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2023-10-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2023-10-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/records/filter/category?category=Salary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records",
+								"filter",
+								"category"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Salary"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter By Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/records/filter/type?type=INCOME",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"records",
+								"filter",
+								"type"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "INCOME"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/summary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
