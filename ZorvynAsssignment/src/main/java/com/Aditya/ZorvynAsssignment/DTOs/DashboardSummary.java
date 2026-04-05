@@ -18,9 +18,7 @@ public class DashboardSummary {
     private BigDecimal netBalance;
     private List<FinanceRecordResponse> recentActivity;
 
-    // Category name → total amount
     private Map<String, BigDecimal> categoryTotals;
 
-    // Monthly summaries embedded as simple maps
     private List<Map<String, Object>> monthlySummary;
 }

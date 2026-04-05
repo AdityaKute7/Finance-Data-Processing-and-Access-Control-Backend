@@ -20,19 +20,16 @@ import java.time.LocalDate;
 public class FinanceRecordRequest {
 
     @NotNull(message = "Amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than zero")
     private BigDecimal amount;
 
     @NotNull(message = "Type is required")
     private RecordType type;
 
     @NotBlank(message = "Category is required")
-    @Size(max = 50, message = "Category must be at most 50 characters")
     private String category;
 
     @NotNull(message = "Date is required")
     private LocalDate date;
 
-    @Size(max = 255, message = "Description must be at most 255 characters")
     private String description;
 }
