@@ -46,6 +46,5 @@ public class User {
     private LocalDateTime updatedAt;
 
 
-    public <T> User(String username, String password, List<T> ts) {
-    }
+
 }

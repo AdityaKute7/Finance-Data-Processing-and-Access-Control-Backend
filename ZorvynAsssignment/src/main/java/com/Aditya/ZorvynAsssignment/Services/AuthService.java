@@ -29,48 +29,27 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public AuthResponse register(RegisterRequest request) {
-
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new BadRequestException("Username is already taken");
-        }
-
-        if (userRepository.existsByEmail(request.getEmail())) {
+        } if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email is already in use");
         }
 
+        Role viewerRole = roleRepository.findByName(RoleName.VIEWER)
+                .orElseThrow(() -> new BadRequestException("Default role VIEWER not found. Please seed the database."));
 
-        RoleName roleName = request.getRole() != null             // use role from request,defualt VIEWER
-                ? request.getRole()
-                : RoleName.VIEWER;
-
-        Role role = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new BadRequestException("Role not found"));
-
-        User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(role)
-                .status(UserStatus.ACTIVE)
-                .build();
+        User user = User.builder() .username(request.getUsername())
+                                    .email(request.getEmail())
+                                    .password(passwordEncoder.encode(request.getPassword()))
+                                    .role(viewerRole) .status(UserStatus.ACTIVE) .build();
 
         userRepository.save(user);
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()) );
 
         String token = jwtTokenProvider.generateToken(authentication);
-
-        return AuthResponse.builder()
-                .token(token)
+        return AuthResponse.builder() .token(token)
                 .username(user.getUsername())
-                .role(user.getRole().getName().name())
-                .build();
-    }
+                .role(user.getRole().getName().name()) .build(); }
 
     public AuthResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
