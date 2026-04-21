@@ -29,6 +29,7 @@ public interface FinanceRecordRepository extends JpaRepository<FinanceRecord, Lo
     // Took help from Spring Data Jpa documentation
     // and AI-assisted guidance to dessign the queries, and The business logic was designed and adapted by me.
     @Query("SELECT COALESCE(SUM(f.amount), 0) FROM FinanceRecord f WHERE f.createdBy = :user AND f.type = 'INCOME'")
+
     BigDecimal sumIncomeByUser(@Param("user") User user);
 
     @Query("SELECT COALESCE(SUM(f.amount), 0) FROM FinanceRecord f WHERE f.createdBy = :user AND f.type = 'EXPENSE'")
